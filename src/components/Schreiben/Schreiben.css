@@ -1,0 +1,41 @@
+.schreiben-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto;
+  max-width: 1100px;
+}
+
+.schreiben-box {
+  flex: 1;
+  padding: 20px;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  min-height: 400px;
+  cursor: pointer;
+  transition: 0.3s;
+  overflow-y: auto;
+}
+
+.schreiben-box:hover {
+  border-color: #bd3b0b;
+}
+
+.input-mode {
+  cursor: default;
+}
+
+.schreiben-input {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  background: #fff;
+  box-sizing: border-box;
+}

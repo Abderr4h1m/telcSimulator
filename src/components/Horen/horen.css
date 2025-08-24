@@ -1,0 +1,250 @@
+.horen-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  border-radius: 8px;
+}
+
+.horen-wrapper h2 {
+  text-align: center;
+  color: rgb(1, 124, 145);
+  margin-bottom: 10px;
+}
+
+.horen-wrapper p.description {
+  text-align: center;
+  color: #7f8c8d;
+  margin-bottom: 30px;
+}
+
+.horen-audio-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.horen-play-btn {
+  padding: 12px 24px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.horen-table-container {
+  overflow-x: auto;
+}
+
+.horen-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.horen-table th {
+  padding: 12px;
+  text-align: center;
+  background-color: rgb(199, 68, 12);
+  color: white;
+}
+
+.horen-table th:nth-child(2) {
+  text-align: left;
+}
+
+.horen-table td {
+  padding: 12px;
+  text-align: center;
+}
+
+.horen-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.horen-table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.horen-radio {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin: 0 auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.horen-radio.correct {
+  border: 2px solid #27ae60;
+}
+
+.horen-radio.incorrect {
+  border: 2px solid #e74c3c;
+}
+
+.horen-radio.correct.selected {
+  background-color: #27ae60;
+  color: white;
+}
+
+.horen-radio.incorrect.selected {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.horen-submit-btn {
+  padding: 14px 28px;
+  background-color: rgb(1, 124, 145);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.horen-instructions {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #e8f4fc;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.horen-instructions h4 {
+  margin: 0 0 10px 0;
+  color: rgb(1, 124, 145);
+}
+
+.horen-instructions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.horen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 20px;
+}
+
+.horen-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.horen-card:hover {
+  transform: translateY(-5px);
+}
+
+.horen-title {
+  background: rgb(1, 124, 145);
+  color: white;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.horen-content {
+  padding: 30px;
+  text-align: center;
+}
+
+.rest-message {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.time {
+  font-weight: bold;
+  color: rgb(189, 62, 11);
+  font-size: 1.4rem;
+}
+
+.instruction {
+  color: #7f8c8d;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.horen-footer {
+  padding: 20px;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgb(1, 124, 145), #2ecc71);
+  border-radius: 4px;
+  transition: width 1s linear;
+}
+
+.start-now-btn {
+  width: 100%;
+  padding: 12px;
+  background: rgb(1, 124, 145);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.start-now-btn:hover {
+  background: #1a252f;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .horen-content {
+    padding: 20px;
+  }
+
+  .rest-message {
+    font-size: 1.1rem;
+  }
+
+  .time {
+    font-size: 1.2rem;
+  }
+}

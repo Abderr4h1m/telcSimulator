@@ -1,0 +1,157 @@
+/* Zertifikat Container */
+.zertifikat {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 40px;
+  background: #fff;
+  color: #000;
+  border: 1px solid #ddd;
+}
+
+/* Title */
+.zertifikat h1 {
+  font-size: 38px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Subtitle Section */
+.zer-section h2 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.zer-subtitle {
+  font-size: 14px;
+  text-align: center;
+  margin: 0;
+}
+
+.zer-italic {
+  font-size: 13px;
+  text-align: center;
+  font-style: italic;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+/* Info Table */
+.zer-table-section {
+  margin-bottom: 30px;
+}
+
+.zer-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.zer-info-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #000;
+}
+
+.zer-label {
+  width: 50%;
+  font-weight: normal;
+}
+
+/* Score Section */
+.zer-score-section {
+  margin-bottom: 25px;
+}
+
+.zer-score-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 15px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.zer-score-details {
+  margin-left: 15px;
+}
+
+.zer-score-detail {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 3px 0;
+}
+
+.zer-detail-label {
+  font-weight: normal;
+}
+
+/* Summary */
+.zer-summary-section {
+  margin: 20px 0;
+}
+
+.zer-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  border-top: 1px solid #000;
+  padding-top: 8px;
+  font-size: 15px;
+}
+
+/* Details Section */
+.zer-details-section {
+  margin-top: 30px;
+}
+
+.zer-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.zer-details-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #000;
+}
+
+/* Signature */
+.zer-signature-section {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.zer-signature-line {
+  border: none;
+  border-top: 1px solid #000;
+  width: 200px;
+  margin: 0 auto 5px;
+}
+
+.zer-signature-label {
+  font-size: 13px;
+  color: #333;
+}
+
+/* Download Button */
+.zer-download-btn {
+  display: block;
+  margin: 30px auto 0;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 1px solid #bd3b0b;
+  border-radius: 6px;
+  background: #fff;
+  color: #bd3b0b;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 70px;
+}
+
+.zer-download-btn:hover {
+  background: #bd3b0b;
+  color: #fff;
+}
