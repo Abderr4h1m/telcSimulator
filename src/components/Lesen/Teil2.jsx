@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveAnswer } from "../../redux/examSlice.js";
+import { saveAnswer, showResults } from "../../redux/examSlice.js";
 import { LesenTeil2 } from "../../data.js";
 import "./lesen.css";
-import { Link } from "react-router-dom";
 
-const Exam = () => {
+const LesenTeil2Component = () => {
   const dispatch = useDispatch();
-  const { answers } = useSelector((state) => state.exam);
+  const answers = useSelector((state) => state.exam.answers.lesen?.teil2 || {});
+  const showResult = useSelector((state) => state.exam.showResults);
 
-  const section = "lesen";
-  const teil = 2;
-
-  // Filter items where teil=2 and text exists
   const teilItems = LesenTeil2.filter(
-    (item) => item.teil === teil && item.text?.trim() !== ""
+    (item) => item.teil === 2 && item.text?.trim() !== ""
   );
 
-  // State for current item to display
   const [currentItem, setCurrentItem] = useState(null);
 
   useEffect(() => {
-    if (teilItems.length === 0) return;
-    // Choose random item ONCE
-    const randomIndex = Math.floor(Math.random() * teilItems.length);
-    setCurrentItem(teilItems[randomIndex]);
+    if (teilItems.length > 0) {
+      const randomIndex = Math.floor(Math.random() * teilItems.length);
+      setCurrentItem(teilItems[randomIndex]);
+    }
   }, []);
 
   const handleAnswerSelect = (questionId, answer) => {
     if (!currentItem) return;
     dispatch(
       saveAnswer({
-        section,
-        teil: currentItem.id,
+        section: "lesen",
+        teil: "teil2",
         questionId,
         answer,
       })
@@ -40,11 +35,7 @@ const Exam = () => {
   };
 
   const handleSubmit = () => {
-    console.log(
-      "User answers for this item:",
-      answers[section]?.[currentItem?.id] || {}
-    );
-    alert("Answers saved!");
+    dispatch(showResults());
   };
 
   if (!currentItem) return <p>Loading...</p>;
@@ -57,62 +48,62 @@ const Exam = () => {
       </div>
       <div className="lesenteil2-container">
         <div className="lesenteil2-content">
-          {/* Text Section (60% width, scrollable) */}
           <div className="lesenteil2-text-section">
-            <h3 className="lesenteil2-title">{currentItem.title}</h3>
-            <div className="lesenteil2-text-content">
-              <p>{currentItem.text}</p>
-            </div>
+            <h3>{currentItem.title}</h3>
+            <p>{currentItem.text}</p>
           </div>
 
-          {/* Questions Section (40% width) */}
           <div className="lesenteil2-questions-section">
-            {currentItem.questions.map((question) => (
-              <div key={question.id} className="lesenteil2-question">
-                <p className="lesenteil2-question-text">
-                  {question.question_text}
-                </p>
-                <div className="lesenteil2-options">
-                  {["A", "B", "C"].map((option) => (
-                    <div
-                      key={option}
-                      className={`lesenteil2-option ${
-                        answers?.[section]?.[currentItem.id]?.[question.id] ===
-                        option
-                          ? "lesenteil2-selected"
-                          : ""
-                      }`}
-                      onClick={() => handleAnswerSelect(question.id, option)}
-                    >
-                      <input
-                        type="radio"
-                        id={`q${currentItem.id}_${question.id}_${option}`}
-                        name={`q${currentItem.id}_${question.id}`}
-                        checked={
-                          answers?.[section]?.[currentItem.id]?.[
-                            question.id
-                          ] === option
-                        }
-                        readOnly
-                      />
-                      <label
-                        htmlFor={`q${currentItem.id}_${question.id}_${option}`}
+            {currentItem.questions.map((q) => {
+              const userAnswer = answers[q.id];
+              const isCorrect = userAnswer === q.correctAnswer;
+
+              return (
+                <div key={q.id} className="lesenteil2-question">
+                  <p>{q.question_text}</p>
+                  <div className="lesenteil2-options">
+                    {["A", "B", "C"].map((option) => (
+                      <div
+                        key={option}
+                        className={`lesenteil2-option ${
+                          userAnswer === option ? "lesenteil2-selected" : ""
+                        } ${
+                          showResult
+                            ? isCorrect
+                              ? "correct"
+                              : userAnswer === option
+                              ? "wrong"
+                              : ""
+                            : ""
+                        }`}
+                        onClick={() => handleAnswerSelect(q.id, option)}
                       >
-                        {option}: {question[`option_${option.toLowerCase()}`]}
-                      </label>
-                    </div>
-                  ))}
+                        <input
+                          type="radio"
+                          checked={userAnswer === option}
+                          readOnly
+                        />
+                        {option}: {q[`option_${option.toLowerCase()}`]}
+                      </div>
+                    ))}
+                  </div>
+
+                  {showResult && (
+                    <p className="correct-answer">
+                      Richtige Antwort: {q.correctAnswer}
+                    </p>
+                  )}
                 </div>
-              </div>
-            ))}
-            <Link to="/lesen/teil3">
-              <button className="lesenteil2-submit-btn">Anschlisend</button>
-            </Link>
+              );
+            })}
           </div>
         </div>
       </div>
+      <button onClick={handleSubmit} className="submit-btn">
+        Antworten abschicken
+      </button>
     </>
   );
 };
 
-export default Exam;
+export default LesenTeil2Component;

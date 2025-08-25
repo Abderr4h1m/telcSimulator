@@ -1,24 +1,21 @@
-import React, { useState, useRef } from "react";
+// HorenTeil1.jsx
+import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { saveAnswer } from "../../redux/examSlice";
+import { HorenData } from "../../data";
 import "./horen.css";
 
 const HorenTeil1 = () => {
-  const [answers, setAnswers] = useState(Array(5).fill(null));
-  const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useDispatch();
   const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const questions = [
-    "Laut BILD AM SONNTAG können in Zukunft nur Mieter, aber nicht Vermieter bestimmte Mietverträge schneller kündigen.",
-    "In bestimmten Bundesländern sollen Wohnhäuser abgerissen werden, weil sie unbewohnt sind.",
-    "Sowohl die Waldbrände als auch die Hitzewelle in Griechenland sind zu Ende.",
-    "In Kanada mussten die Bergungsarbeiten nach einem Tornado wegen erneuter Unwetterwarnungen eingestellt werden.",
-    "Bei einem Fährunglück in der Nähe von Gibraltar gab es nur Sachschaden.",
-  ];
+  // jib jawabat mn Redux
+  const answers = useSelector(
+    (state) => state.exam.answers?.horen?.teil1 || {}
+  );
 
-  const handleAnswerSelect = (index, value) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value;
-    setAnswers(newAnswers);
-  };
+  const questions = HorenData.teil1; // dynamic questions
 
   const togglePlayPause = () => {
     if (isPlaying) audioRef.current.pause();
@@ -28,14 +25,29 @@ const HorenTeil1 = () => {
 
   const handleAudioEnd = () => setIsPlaying(false);
 
+  const handleAnswerSelect = (id, value) => {
+    dispatch(
+      saveAnswer({
+        section: "horen",
+        teil: "teil1",
+        questionId: id,
+        answer: value,
+      })
+    );
+    console.log("Current answers:", {
+      ...answers,
+      [id]: value,
+    });
+  };
+
   return (
     <>
-      {" "}
       <div className="info-box">
         Sie hören die Nachrichten. Entscheiden Sie beim Hören, ob die Aussagen
         richtig oder falsch sind. Sie hören die Nachrichten nur einmal. Sie
         haben jetzt 30 Sekunden, um die Aussagen zu lesen.
       </div>
+
       <div className="horen-wrapper">
         <div className="horen-audio-container">
           <audio
@@ -80,28 +92,28 @@ const HorenTeil1 = () => {
               </tr>
             </thead>
             <tbody>
-              {questions.map((q, i) => (
-                <tr key={i}>
-                  <td>{i + 1}.</td>
-                  <td style={{ textAlign: "left" }}>{q}</td>
+              {questions.map((q) => (
+                <tr key={q.id}>
+                  <td>{q.id}.</td>
+                  <td style={{ textAlign: "left" }}>{q.text}</td>
                   <td>
                     <div
                       className={`horen-radio correct ${
-                        answers[i] === true ? "selected" : ""
+                        answers[q.id] === true ? "selected" : ""
                       }`}
-                      onClick={() => handleAnswerSelect(i, true)}
+                      onClick={() => handleAnswerSelect(q.id, true)}
                     >
-                      {answers[i] === true && "✓"}
+                      {answers[q.id] === true && "✓"}
                     </div>
                   </td>
                   <td>
                     <div
                       className={`horen-radio incorrect ${
-                        answers[i] === false ? "selected" : ""
+                        answers[q.id] === false ? "selected" : ""
                       }`}
-                      onClick={() => handleAnswerSelect(i, false)}
+                      onClick={() => handleAnswerSelect(q.id, false)}
                     >
-                      {answers[i] === false && "✗"}
+                      {answers[q.id] === false && "✗"}
                     </div>
                   </td>
                 </tr>
@@ -109,8 +121,6 @@ const HorenTeil1 = () => {
             </tbody>
           </table>
         </div>
-
-        <div style={{ textAlign: "center", marginTop: "30px" }}></div>
 
         <div className="horen-instructions">
           <h4>Hinweise:</h4>

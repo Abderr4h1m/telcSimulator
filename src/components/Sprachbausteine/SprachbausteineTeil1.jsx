@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saveAnswer } from "../../redux/examSlice";
-import { sprachbausteineData } from "../../data.js";
+import { sprachbausteine1Data } from "../../data.js";
 import "./Sprachbausteine.css";
 
 const SprachbausteineTeil1 = () => {
@@ -9,8 +9,7 @@ const SprachbausteineTeil1 = () => {
   return (
     <>
       <div className="info-box">
-        Lesen Sie die Überschriften a–j und die Texte 1–5 und entscheiden Sie,
-        welche Überschrift am besten zu welchem Text passt.
+        Lesen Sie diese E-mail und wahlen die richtige Antwort
       </div>
       <div className="sp1-container">
         <p id="paragraph">

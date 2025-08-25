@@ -8,10 +8,10 @@ const Schreiben = () => {
     <div className="schreiben-container">
       {/* Aufgabe A */}
       <div
-        className={`schreiben-box ${selected === "B" ? "input-mode" : ""}`}
+        className={`schreiben-box ${selected === "A" ? "input-mode" : ""}`}
         onClick={() => setSelected("A")}
       >
-        {selected === "B" ? (
+        {selected === "A" ? (
           <textarea
             className="schreiben-input"
             placeholder="Schreiben Sie hier Ihre Antwort..."
@@ -33,12 +33,11 @@ const Schreiben = () => {
         )}
       </div>
 
-      {/* Aufgabe B */}
       <div
-        className={`schreiben-box ${selected === "A" ? "input-mode" : ""}`}
+        className={`schreiben-box ${selected === "B" ? "input-mode" : ""}`}
         onClick={() => setSelected("B")}
       >
-        {selected === "A" ? (
+        {selected === "B" ? (
           <textarea
             className="schreiben-input"
             placeholder="Schreiben Sie hier Ihre Antwort..."

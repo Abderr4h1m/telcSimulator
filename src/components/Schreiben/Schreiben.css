@@ -12,7 +12,7 @@
   background: #f8f8f8;
   border: 1px solid #ccc;
   border-radius: 8px;
-  min-height: 400px;
+  min-height: 600px;
   cursor: pointer;
   transition: 0.3s;
   overflow-y: auto;
@@ -36,6 +36,6 @@
   padding: 10px;
   font-size: 16px;
   border-radius: 6px;
-  background: #fff;
+  background: #f8f8f8;
   box-sizing: border-box;
 }

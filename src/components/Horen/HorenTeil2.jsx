@@ -1,29 +1,21 @@
-import React, { useState, useRef } from "react";
+// HorenTeil2.jsx
+import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { saveAnswer } from "../../redux/examSlice";
+import { HorenData } from "../../data";
 import "./horen.css";
 
 const HorenTeil2 = () => {
-  const [answers, setAnswers] = useState(Array(10).fill(null));
-  const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useDispatch();
   const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const questions = [
-    "Frage 1: Beispieltext für die erste Aussage.",
-    "Frage 2: Beispieltext für die zweite Aussage.",
-    "Frage 3: Beispieltext für die dritte Aussage.",
-    "Frage 4: Beispieltext für die vierte Aussage.",
-    "Frage 5: Beispieltext für die fünfte Aussage.",
-    "Frage 6: Beispieltext für die sechste Aussage.",
-    "Frage 7: Beispieltext für die siebte Aussage.",
-    "Frage 8: Beispieltext für die achte Aussage.",
-    "Frage 9: Beispieltext für die neunte Aussage.",
-    "Frage 10: Beispieltext für die zehnte Aussage.",
-  ];
+  // jawabat mn Redux
+  const answers = useSelector(
+    (state) => state.exam.answers?.horen?.teil2 || {}
+  );
 
-  const handleAnswerSelect = (index, value) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value;
-    setAnswers(newAnswers);
-  };
+  const questions = HorenData.teil2; // dynamic
 
   const togglePlayPause = () => {
     if (isPlaying) audioRef.current.pause();
@@ -32,6 +24,21 @@ const HorenTeil2 = () => {
   };
 
   const handleAudioEnd = () => setIsPlaying(false);
+
+  const handleAnswerSelect = (id, value) => {
+    dispatch(
+      saveAnswer({
+        section: "horen",
+        teil: "teil2",
+        questionId: id,
+        answer: value,
+      })
+    );
+    console.log("Current answers:", {
+      ...answers,
+      [id]: value,
+    });
+  };
 
   return (
     <>
@@ -85,28 +92,28 @@ const HorenTeil2 = () => {
               </tr>
             </thead>
             <tbody>
-              {questions.map((q, i) => (
-                <tr key={i}>
-                  <td>{i + 1}.</td>
-                  <td style={{ textAlign: "left" }}>{q}</td>
+              {questions.map((q) => (
+                <tr key={q.id}>
+                  <td>{q.id}.</td>
+                  <td style={{ textAlign: "left" }}>{q.text}</td>
                   <td>
                     <div
                       className={`horen-radio correct ${
-                        answers[i] === true ? "selected" : ""
+                        answers[q.id] === true ? "selected" : ""
                       }`}
-                      onClick={() => handleAnswerSelect(i, true)}
+                      onClick={() => handleAnswerSelect(q.id, true)}
                     >
-                      {answers[i] === true && "✓"}
+                      {answers[q.id] === true && "✓"}
                     </div>
                   </td>
                   <td>
                     <div
                       className={`horen-radio incorrect ${
-                        answers[i] === false ? "selected" : ""
+                        answers[q.id] === false ? "selected" : ""
                       }`}
-                      onClick={() => handleAnswerSelect(i, false)}
+                      onClick={() => handleAnswerSelect(q.id, false)}
                     >
-                      {answers[i] === false && "✗"}
+                      {answers[q.id] === false && "✗"}
                     </div>
                   </td>
                 </tr>

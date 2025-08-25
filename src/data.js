@@ -108,51 +108,6 @@ export const examData = {
   },
 };
 
-// src/data.js
-export const LesenTeil1 = {
-  // The 5 texts (left side)
-  texts: [
-    {
-      id: 1,
-      content:
-        "Entdecken Sie interessante Städte und Regionen. Im Herzen Deutschlands liegen wunderbare Landschaften, mit einem für deutsche Verhältnisse sehr milden Klima – und keine typischen „Touristziele“. Von der Stadt Gießen ausgehend kann man in den hessischen Kreisen Bergstraße und Waldeck-Frankenberg viele Orte entdecken, die noch ein Geheimtipp sind. Vor allem gilt dies für den Kreis Waldeck-Frankenberg. Wer nicht gerade in Hessen wohnt, wird kaum wissen, wo diese Region eigentlich liegt. Es ist ein herrliches Stück Deutschland ohne besonders große Städte, eine Gegend, die Natur pur bietet. Daher wundert es nicht, dass man hier einige Kurorte findet wie Bad Arolsen oder Bad Wildungen oder den Luftkurort Edertal-Kleinern. Apropos Edertal: Der zwölf Quadratkilometer große Edersee gehört zu den vier schönen „blauen Augen“ des Kreises. Der Landkreis Waldeck-Frankenberg ist Hessens attraktivstes Umland. In der Region der Berge und Seen spürt man auch heute noch einen Hauch von Fürstlichkeit: Majestätisch erhebt sich über dem Edersee das Schloss Waldeck. Auch in Bad Arolsen, einer ehemaligen Residenzstadt, ist vieles noch vom früheren Adel geprägt. Unbedingt besuchen sollte man darüber hinaus das über 1000 Jahre alte Korbach wie auch die Fachwerkstadt Frankenberg.",
-    },
-    { id: 2, content: "Text 2 content goes here..." },
-    { id: 3, content: "Text 3 content goes here..." },
-    { id: 4, content: "Text 4 content goes here..." },
-    { id: 5, content: "Text 5 content goes here..." },
-  ],
-
-  // The 10 possible titles (right side)
-  titles: [
-    { id: "A", text: "Am Strand im Dienst - mehr Sicherheit für Urlauber" },
-    { id: "B", text: "Bäder, Seen und Natur – im hessischen Paradies" },
-    {
-      id: "C",
-      text: "Freiheit und Natur – nach sechs Wochen harter Arbeit",
-    },
-    { id: "D", text: "Jugendliche arbeiten für Jugendliche" },
-    {
-      id: "E",
-      text: "Kinderarbeit in Deutschland: Jugendliche werden zur Arbeit gezwungen",
-    },
-    { id: "F", text: "Nach harter Arbeit durch nordische Gewässer" },
-    { id: "G", text: "Schaden an Kreuzfahrtschiff verhindert Weiterfahrt" },
-    { id: "H", text: "Urlaub an deutschen Seen immer gefährlicher" },
-    { id: "I", text: "Wegen Niedrigwasser: vom Fluss auf die Straße" },
-    { id: "J", text: "Zu Gast bei den Fürsten" },
-  ],
-
-  // Correct answers (e.g., which title matches which text)
-  correctAnswers: {
-    1: "B", // Text 1 → Title B
-    2: "E", // Text 2 → Title E
-    3: "H", // Text 3 → Title H
-    4: "F", // Text 4 → Title F
-    5: "J", // Text 5 → Title J
-  },
-};
-
 export const LesenTeil1Data = {
   texts: [
     {
@@ -297,6 +252,13 @@ ab: „Das war höhere Gewalt, da kann man nichts machen.`,
     { id: "i", text: "Wegen Niedrigwasser: vom Fluss auf die Straße" },
     { id: "j", text: "Zu Gast bei den Fürsten" },
   ],
+  correctAnswers: {
+    1: "B", // Text 1 → Title B
+    2: "E", // Text 2 → Title E
+    3: "H", // Text 3 → Title H
+    4: "F", // Text 4 → Title F
+    5: "J", // Text 5 → Title J
+  },
 };
 
 export const LesenTeil2 = [
@@ -783,132 +745,121 @@ Eine Sprachverwirrung durch die Multilingualität oder gar eine Verzögerung in 
   },
 ];
 
-export const teil3Exercises = [
-  {
-    id: 1,
-    situations: [
-      {
-        id: 1,
-        text: "Ein Kollege hat seit ein paar Tagen Hautprobleme und weiß nicht, was die Ursache sein könnte.",
-      },
-      {
-        id: 2,
-        text: "Sie möchten etwas mit ihrer 7-jährigen Tochter unternehmen.",
-      },
-      {
-        id: 3,
-        text: "Ihre Bekannte hat Fieber, möchte aber keine Tabletten nehmen.",
-      },
-      {
-        id: 4,
-        text: "Das Ehepaar, das unter Ihnen wohnt, möchte etwas über Computer lernen.",
-      },
-      {
-        id: 5,
-        text: "Sie wollen Informationen über eine Zahnversicherung, ohne telefonieren zu müssen.",
-      },
-      {
-        id: 6,
-        text: "Ihre Nachbarin ist seit einer Woche erkältet. Natürliche Heilmittel haben nicht geholfen.",
-      },
-      {
-        id: 7,
-        text: "Sie bekommen Besuch und möchten am Sonntagvormittag etwas Interessantes unternehmen.",
-      },
-      {
-        id: 8,
-        text: "Ihre Freundin interessiert sich für japanische Medizin. Sie suchen als Geburtstagsgeschenk ein Buch zu diesem Thema.",
-      },
-      {
-        id: 9,
-        text: "Sie haben ein Haustier, das im letzten Jahr viel Geld für den Tierarzt gekostet hat. Sie suchen eine Möglichkeit, Kosten zu sparen.",
-      },
-      {
-        id: 10,
-        text: "Sie möchten eine Versicherung für Ihren Neuwagen abschließen und sofort wissen, was es kostet.",
-      },
-    ],
-    ads: [
-      {
-        id: 1,
-        title: "Ratgeber 'Was bei Erkältung hilft'",
-        text: "Erkältungen gehören leider zum Leben. Sie kommen immer wieder wie Frühling, Sommer, Herbst und Winter. Jetzt ist wieder Erkältungssaison. Hier sind einige wichtige Tipps. Bei Fieber: mindestens 2-3 Liter Tee oder Wasser pro Tag trinken. Feuchte Wadenwickel können helfen. Ist das Fieber nach zwei Tagen nicht weg, unbedingt zum Arzt gehen. Bei Halsweh mit Salzwasser gurgeln (1 Glas Wasser, ein Teelöffel Salz) oder Salbeitee trinken.",
-      },
-      {
-        id: 2,
-        title: "Wir zeigen, wie viel die Zähne kosten!",
-        text: "Für alle, die noch viel vorhaben: Sichern Sie sich Top-Leistung zu Top-Konditionen! Genießen Sie den maßgeschneiderten privaten Versicherungsschutz für Zähne und die zuverlässige Sicherheit der WORMSER. Da lohnt sich der Wechsel: bis zum 31.12. handeln und dauerhaft von Beitrags-Vorteilen profitieren. Ein Leben lang! Mehr Informationen kostenfrei unter 0700/4332000.",
-      },
-      {
-        id: 3,
-        title: "Kochen und waschen um 1900",
-        text: "Das Thema, wenn Anita Krämer am kommenden Sonntag durch das Museum für Stadtgeschichte führt. Wie wurde damals gekocht und gewaschen? Wie haben unsere Ur-Ur-Großeltern damals gelebt? Kühlschrank, Mikrowelle und andere moderne Geräte gab es ja in jener Zeit noch nicht. Wie hat man Speisen haltbar gemacht? Wie wurde gebügelt? Auf all diese Fragen hat Frau Krämer eine Antwort. Auch Kinder sind herzlich willkommen. Sie werden auch erfahren, wie oft Kinder damals gewaschen wurden. Wie sah es mit der Zahnpflege aus? Eine spannende und unterhaltsame Reise in die Zeit von vor 100 Jahren. Der Eintritt ist frei. Die Führung findet immer in Gruppen von 10 Personen ab 10 Uhr zu jeder vollen Stunde statt. Museum für Stadtgeschichte, Alte Waldstraße 11.",
-      },
-      {
-        id: 4,
-        title: "Lesen, was gesund macht",
-        text: "Jetzt in der neuen Apotheken-Revue: Ohrprobleme: endlich wieder gut hören! Hautpflege: gut geschützt durch jede Jahreszeit Kampo: heilen mit traditioneller japanischer Medizin Diese und noch viele weitere interessante Themen rund um Ihre Gesundheit, plus Rätselspaß und tolle Gewinnspiele. Alle 14 Tage neu in Ihrer Apotheke. Kostenlos!",
-      },
-      {
-        id: 5,
-        title: "Nachhilfe",
-        text: "Wenn es um den Computer geht, wissen viele Kinder längst besser Bescheid als Erwachsene. Fast die Hälfte (47%) der 10- bis 19-Jährigen, in deren Haushalt ein Computer steht, wird vom Vater, von der Mutter, aber auch von Oma und Opa um Rat gefragt. In der Heinrich-Mann-Schule geben computerbegeisterte Schüler jetzt jeden Samstag von 10 bis 12 Uhr sogar extra Nachhilfekurse für Erwachsene. Start ist am kommenden Samstag, der Schülerservice ist kostenlos! Interessierte Schülerinnen und Schüler, die ihre Erfahrungen weitergeben möchten, können auch gern vorbeikommen und mitmachen.",
-      },
-      {
-        id: 6,
-        title: "Vienna CONEKT",
-        text: "Versichern Sie Ihr Auto ab 35 Cent am Tag. Sparen Sie zusätzlich mit dem Bonusprogramm und bleiben Sie flexibel: Sie können jederzeit monatlich kündigen. Jetzt Beitrag direkt berechnen: vienna-conekt.de 018084-33556474 Mit der Vienna Conekt haben Sie direkt mehr Vorteile: immer günstig, immer erreichbar (24-Stunden-Schaden-Hotline). Ersatzwagengarantie!",
-      },
-      {
-        id: 7,
-        title: "Die Behandlung kommt vom Arzt.",
-        text: "Die Fürsorge von Ihnen. Die Finanzspritze von uns. Der umfassende Schutz bei Krankheit und Unfall. Auch Liebe kann nicht verhindern, dass Ihr Haustier mal krank wird oder einen Unfall hat. Die dadurch notwendige Behandlung oder Operation kann schnell bis zu 1000 Euro kosten. Die neue care-securitas Tierschutzversicherung schützt Sie vor diesem Risiko. Kümmern Sie sich also um Ihren vierbeinigen Patienten – wir kümmern uns um die Kosten. Weitere Informationen unter www.care-securitas.de",
-      },
-      {
-        id: 8,
-        title: "Kindertheater:",
-        text: "Warum Teilen schwer und Betten grausam ist Dass es viel einfacher ist, egoistisch zu sein, als mitfühlend, weiß fast jeder. Dass aber auch Menschen, die Hilfe brauchen, egoistisch sein können, zeigt das Stück 'Der gute Mensch von Sezuan' von Bertolt Brecht. Und er erzählt es so, dass auch Kinder es verstehen können. Im Theater an der Parkaue wird das Stück am Sonntag um 14 Uhr in der Originalfassung gezeigt. Regisseurin Claudia Kipfel: 'Dieses Stück kann man so lassen, wie es ist. Kinder verstehen es sofort.' Karten: 0179-666453110 für Kinder ab 8 Jahren. Preise: 12 Euro. Kinder bis 12 Jahre: 7 Euro.",
-      },
-      {
-        id: 9,
-        title: "Omnitamol 500 Tabletten",
-        text: "Wann nehmen Sie Omnitamol? Bei leichten bis mäßig starken Schmerzen. Bei Fieber und Erkältungen. Wichtig: Nehmen Sie Omnitamol nur 3-4 Tage ein, danach gehen Sie bitte unbedingt zu Ihrem Arzt oder Zahnarzt, wenn Ihre Beschwerden sich nicht gebessert haben. Was ist bei Kindern zu berücksichtigen? Omnitamol 500 Tabletten sind nicht geeignet für Kinder unter 6 Jahren. Für Kinder bieten wir Ihnen gesonderte Präparate an. Fragen Sie Ihren Arzt oder Apotheker.",
-      },
-      {
-        id: 10,
-        title: "Neue Kleidung kann krank machen",
-        text: "Das neue Hemd passt prima zu Lieblingsjeans. Warum also nicht gleich anziehen? Doch Vorsicht: Neue Textilien können Allergien und Hautreizungen auslösen, vor allem bei Kindern und Menschen mit empfindlicher Haut. Grund: Viele Textilien enthalten Farbstoffe oder andere Chemikalien. Tipp: Neue Kleidungsstücke vor dem ersten Tragen waschen. Für Babys und Kleinkinder ist Second-Hand-Kleidung eine gute Alternative, da die Schadstoffe schon ausgewaschen sind.",
-      },
-      {
-        id: 11,
-        title: "Erkältungszeit = Theaterzeit",
-        text: "Zu einem hoffentlich husten- und schnupfenfreien Nachmittag für die ganze Familie lädt das Puppentheater 'Die Langohren' am morgigen Sonntag um 15 Uhr ein. Das Ensemble um die professionelle Puppenspielerin Margit Hallmann spielt 'Hätschi, kleine Anna' und verspricht ein Theatererlebnis für Erwachsene und Kinder ab 6 Jahren. Die Veranstaltung ist fast ausverkauft. Es gibt noch Restkarten. Tickets unter Telefon (0564) 5404420",
-      },
-      {
-        id: 12,
-        title: "Zusatz-Versicherung",
-        text: "Liebe Leserin, lieber Leser Gepflegte Zähne hängen oft von den finanziellen Möglichkeiten des Patienten ab. Mit der Krankenkasse alleine kommt man oft nicht weit. Mit der DENTALVERSICHERUNG 100Plus von WarmstädtHyper verdoppeln Sie bei Zahnersatz den Zuschuss Ihrer gesetzlichen Krankenkasse. Keine Altersbegrenzung, günstige Monatsbeiträge. Nutzen Sie noch heute diese wichtigen Vorteile. Rufen Sie an: 069-780086753 oder informieren Sie sich im Internet unter www.neue-zaehne.eu. Wir schicken Ihnen die Unterlagen zu.",
-      },
-    ],
-    correctMatches: {
-      1: 10, // Hautprobleme -> Neue Kleidung kann krank machen
-      2: 8, // 7-jährige Tochter -> Kindertheater
-      3: 1, // Fieber ohne Tabletten -> Ratgeber Erkältung
-      4: 5, // Computer lernen -> Nachhilfe
-      5: 2, // Zahnversicherung -> Wir zeigen, wie viel die Zähne kosten
-      6: 9, // Erkältung -> Omnitamol
-      7: 3, // Sonntagvormittag -> Museum Führung
-      8: 4, // japanische Medizin -> Apotheken-Revue
-      9: 7, // Haustier Kosten -> Tierschutzversicherung
-      10: 6, // Autoversicherung -> Vienna CONEKT
+export const LesenTeil3Data = {
+  situations: [
+    { id: 1, text: "Ein Bekannter möchte Schweden per Schiff kennenlernen." },
+    { id: 2, text: "Ein Freund möchte sich im Inline-Skaten perfektionieren." },
+    {
+      id: 3,
+      text: "Ein Kollege möchte sich über Gesundheitsrisiken in Ägypten informieren.",
     },
+    {
+      id: 4,
+      text: "Eine Bekannte möchte einen Kurs über Naturkosmetik besuchen.",
+    },
+    {
+      id: 5,
+      text: "Eine 17-jährige Freundin würde gerne armen Menschen in anderen Ländern helfen.",
+    },
+    {
+      id: 6,
+      text: "Ihr Nachbar möchte sich im Sommerurlaub sportlich betätigen.",
+    },
+    {
+      id: 7,
+      text: "Ihre Freundin möchte gerne bei der Organisation einer Inline-Skate-Veranstaltung mitwirken.",
+    },
+    {
+      id: 8,
+      text: "Sie möchten das Inline-Skaten erlernen und suchen Informationen.",
+    },
+    {
+      id: 9,
+      text: "Sie möchten herausfinden, wo es in Deutschland Skate-Veranstaltungen gibt.",
+    },
+    {
+      id: 10,
+      text: "Sie möchten herausfinden, wo es in Deutschland Skate-Veranstaltungen gibt.",
+    },
+  ],
+
+  ads: [
+    {
+      id: "A",
+      title: "Schweden-Kreuzfahrt",
+      text: "Entdecken Sie die schönsten Schären Schwedens auf einer luxuriösen Kreuzfahrt.",
+    },
+    {
+      id: "B",
+      title: "Inline-Skating Workshop",
+      text: "Professionelle Anleitung für Fortgeschrittene. Verbessern Sie Ihre Technik!",
+    },
+    {
+      id: "C",
+      title: "Gesundheitsrisiken im Ausland",
+      text: "Umfassende Informationen zu Gesundheitsgefahren in Ägypten und anderen Ländern.",
+    },
+    {
+      id: "D",
+      title: "Naturkosmetik-Seminar",
+      text: "Lernen Sie, Ihre eigenen Kosmetikprodukte aus natürlichen Zutaten herzustellen.",
+    },
+    {
+      id: "E",
+      title: "Jugend-Freiwilligenarbeit",
+      text: "Hilfsprojekte für Jugendliche ab 16 Jahren in Entwicklungsländern.",
+    },
+    {
+      id: "F",
+      title: "Aktiver Sommerurlaub",
+      text: "Sport- und Aktivreisen für jeden Fitnesslevel. Jetzt buchen!",
+    },
+    {
+      id: "G",
+      title: "Veranstaltungshelfer gesucht",
+      text: "Unterstützung bei der Organisation des Inline-Skate-Marathons gesucht.",
+    },
+    {
+      id: "H",
+      title: "Inline-Skating für Anfänger",
+      text: "Kurse für Einsteiger aller Altersgruppen. Leihausrüstung verfügbar.",
+    },
+    {
+      id: "I",
+      title: "Skate-Event-Kalender",
+      text: "Übersicht aller Skate-Veranstaltungen in Deutschland. Immer aktuell.",
+    },
+    {
+      id: "J",
+      title: "Veranstaltungshelfer gesucht",
+      text: "Unterstützung bei der Organisation des Inline-Skate-Marathons gesucht.",
+    },
+    {
+      id: "K",
+      title: "Inline-Skating für Anfänger",
+      text: "Kurse für Einsteiger aller Altersgruppen. Leihausrüstung verfügbar.",
+    },
+    {
+      id: "L",
+      title: "Skate-Event-Kalender",
+      text: "Übersicht aller Skate-Veranstaltungen in Deutschland. Immer aktuell.",
+    },
+  ],
+  correctMatches: {
+    1: "A", // Hautprobleme -> Neue Kleidung kann krank machen
+    2: "B", // 7-jährige Tochter -> Kindertheater
+    3: "D", // Fieber ohne Tabletten -> Ratgeber Erkältung
+    4: "C", // Computer lernen -> Nachhilfe
+    5: "E", // Zahnversicherung -> Wir zeigen, wie viel die Zähne kosten
+    6: "F", // Erkältung -> Omnitamol
+    7: "G", // Sonntagvormittag -> Museum Führung
+    8: "H", // japanische Medizin -> Apotheken-Revue
+    9: "I", // Haustier Kosten -> Tierschutzversicherung
+    10: "L", // Autoversicherung -> Vienna CONEKT
   },
-  // You can add more exercises here if needed
-];
+};
 
-// src/data/sprachbausteineData.js
-
-export const sprachbausteineData = [
+export const sprachbausteine1Data = [
   {
     id: "deutschkurs-anmeldung",
     title: "Deutschkurs Anmeldung",
@@ -983,3 +934,113 @@ export const sprachbausteineData = [
   },
   // You can add more exercises here in the future
 ];
+
+// data.js
+export const HorenData = {
+  teil1: [
+    {
+      id: 1,
+      text: "Laut BILD AM SONNTAG können in Zukunft nur Mieter...",
+      correctAnswer: false,
+    },
+    {
+      id: 2,
+      text: "In bestimmten ghfh sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 3,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 4,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 5,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+  ],
+  teil2: [
+    {
+      id: 1,
+      text: "Laut BILD AM SONNTAG können in Zukunft nur Mieter...",
+      correctAnswer: false,
+    },
+    {
+      id: 2,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 3,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 4,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 5,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 6,
+      text: "Laut BILD AM SONNTAG können in Zukunft nur Mieter...",
+      correctAnswer: false,
+    },
+    {
+      id: 7,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 8,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 9,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 10,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+  ],
+  teil3: [
+    {
+      id: 1,
+      text: "Laut BILD AM SONNTAG können in Zukunft nur Mieter...",
+      correctAnswer: false,
+    },
+    {
+      id: 2,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 3,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 4,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+    {
+      id: 5,
+      text: "In bestimmten Bundesländern sollen Wohnhäuser abgerissen...",
+      correctAnswer: true,
+    },
+  ],
+};
