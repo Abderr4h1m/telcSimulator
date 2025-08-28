@@ -1,19 +1,21 @@
+// src/components/Lesen/Teil1.jsx
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveAnswer, showResults } from "../../redux/examSlice";
-import { LesenTeil1Data } from "../../data";
+import { saveAnswer } from "../../redux/examSlice";
+import { LesenData } from "../../data";
 import "./lesen.css";
 
 export default function Teil1() {
   const dispatch = useDispatch();
   const answers = useSelector((state) => state.exam.answers.lesen?.teil1 || {});
-  const showResult = useSelector((state) => state.exam.showResults);
 
-  const { texts, titles, correctAnswers } = LesenTeil1Data;
+  const { texts, titles } = LesenData.teil1;
   const [selectedText, setSelectedText] = useState(null);
 
+  // ✅ Select text
   const handleTextClick = (id) => setSelectedText(id);
 
+  // ✅ Link selected title to selected text
   const handleTitleClick = (titleId) => {
     if (!selectedText) return;
     dispatch(
@@ -21,14 +23,10 @@ export default function Teil1() {
         section: "lesen",
         teil: "teil1",
         questionId: selectedText,
-        answer: titleId,
+        answer: titleId, // store just A,B,C... as given in titles
       })
     );
     setSelectedText(null);
-  };
-
-  const handleSubmit = () => {
-    dispatch(showResults());
   };
 
   return (
@@ -39,11 +37,12 @@ export default function Teil1() {
       </div>
 
       <div className="exam-container">
+        {/* --- Titles (A–J) --- */}
         <div className="exam-titles">
           {titles.map((title, idx) => (
             <div
               key={title.id}
-              className="exam-title"
+              className={`exam-title ${selectedText ? "active-title" : ""}`}
               onClick={() => handleTitleClick(title.id)}
             >
               <strong>{String.fromCharCode(65 + idx)}.</strong> {title.text}
@@ -51,12 +50,11 @@ export default function Teil1() {
           ))}
         </div>
 
+        {/* --- Texts (1–5) --- */}
         <div className="exam-texts-container">
           <div className="exam-texts">
             {texts.map((t, idx) => {
               const userAnswer = answers[t.id];
-              const correctAnswer = correctAnswers[idx + 1];
-              const isCorrect = userAnswer?.toUpperCase() === correctAnswer;
 
               return (
                 <div
@@ -68,25 +66,9 @@ export default function Teil1() {
                 >
                   <strong>{idx + 1}.</strong> {t.content}
                   {userAnswer && (
-                    <div
-                      className={`linked ${
-                        showResult ? (isCorrect ? "correct" : "wrong") : ""
-                      }`}
-                    >
+                    <div className="linked">
                       Gewählt:{" "}
                       {titles.find((title) => title.id === userAnswer)?.text}
-                      {showResult && (
-                        <>
-                          {" "}
-                          | Richtige Antwort:{" "}
-                          {
-                            titles.find(
-                              (title, i) =>
-                                String.fromCharCode(65 + i) === correctAnswer
-                            )?.text
-                          }
-                        </>
-                      )}
                     </div>
                   )}
                 </div>
@@ -95,10 +77,6 @@ export default function Teil1() {
           </div>
         </div>
       </div>
-
-      <button className="submit-btn" onClick={handleSubmit}>
-        Antworten abschicken
-      </button>
     </>
   );
 }

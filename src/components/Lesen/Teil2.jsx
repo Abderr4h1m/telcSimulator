@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveAnswer, showResults } from "../../redux/examSlice.js";
-import { LesenTeil2 } from "../../data.js";
+import { LesenData } from "../../data.js";
 import "./lesen.css";
 
 const LesenTeil2Component = () => {
@@ -9,9 +9,7 @@ const LesenTeil2Component = () => {
   const answers = useSelector((state) => state.exam.answers.lesen?.teil2 || {});
   const showResult = useSelector((state) => state.exam.showResults);
 
-  const teilItems = LesenTeil2.filter(
-    (item) => item.teil === 2 && item.text?.trim() !== ""
-  );
+  const teilItems = LesenData.teil2;
 
   const [currentItem, setCurrentItem] = useState(null);
 
@@ -87,12 +85,6 @@ const LesenTeil2Component = () => {
                       </div>
                     ))}
                   </div>
-
-                  {showResult && (
-                    <p className="correct-answer">
-                      Richtige Antwort: {q.correctAnswer}
-                    </p>
-                  )}
                 </div>
               );
             })}

@@ -18,9 +18,20 @@ const examSlice = createSlice({
     },
     saveAnswer: (state, action) => {
       const { section, teil, questionId, answer } = action.payload;
+
       if (!state.answers[section]) state.answers[section] = {};
       if (!state.answers[section][teil]) state.answers[section][teil] = {};
-      state.answers[section][teil][questionId] = answer;
+
+      // ✅ Fix for Teil2: if 'answer' is an object (like { questionId: answer }), merge it
+      if (typeof answer === "object" && !Array.isArray(answer)) {
+        state.answers[section][teil][questionId] = {
+          ...state.answers[section][teil][questionId],
+          ...answer,
+        };
+      } else {
+        // normal case (Teil1 or single-answer questions)
+        state.answers[section][teil][questionId] = answer;
+      }
     },
     showResults: (state) => {
       state.showResults = true;

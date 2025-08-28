@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import "./lesen.css";
+import { LesenData } from "../../data"; // Import the data
 
 export default function Teil3() {
   const [selectedSituation, setSelectedSituation] = useState(null);
   const [matches, setMatches] = useState({});
   const [clickedSituations, setClickedSituations] = useState({});
+
+  const { situations, ads } = LesenData.teil3;
 
   const handleSituationClick = (situationId) => {
     setSelectedSituation(situationId);

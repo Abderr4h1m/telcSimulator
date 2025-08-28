@@ -1,10 +1,115 @@
+// src/components/Zertifikat/Zertifikat.jsx
 import React, { useRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useSelector } from "react-redux";
+import { HorenData, LesenData } from "../../data";
 import "./Zertifikat.css";
 
 const Zertifikat = () => {
   const certRef = useRef();
+  const answers = useSelector((state) => state.exam.answers);
+
+  // --- Hören Punkte ---
+  // --- Hören Punkte ---
+  const calcHorenScore = () => {
+    let teil1 = 0,
+      teil2 = 0,
+      teil3 = 0;
+
+    // Teil 1
+    HorenData.teil1.forEach((q) => {
+      const userAnswer = answers?.horen?.teil1?.[q.id] || null;
+      if (
+        userAnswer &&
+        (q.correctAnswer || "").toUpperCase() === userAnswer.toUpperCase()
+      ) {
+        teil1 += 5;
+      }
+    });
+
+    // Teil 2
+    HorenData.teil2.forEach((q) => {
+      const userAnswer = answers?.horen?.teil2?.[q.id] || null;
+      if (
+        userAnswer &&
+        (q.correctAnswer || "").toUpperCase() === userAnswer.toUpperCase()
+      ) {
+        teil2 += 2.5;
+      }
+    });
+
+    // Teil 3
+    HorenData.teil3.forEach((q) => {
+      const userAnswer = answers?.horen?.teil3?.[q.id] || null;
+      if (
+        userAnswer &&
+        (q.correctAnswer || "").toUpperCase() === userAnswer.toUpperCase()
+      ) {
+        teil3 += 5;
+      }
+    });
+
+    return { teil1, teil2, teil3, total: teil1 + teil2 + teil3 };
+  };
+
+  // --- Lesen Punkte ---
+  const calcLesenScore = () => {
+    let teil1 = 0,
+      teil2 = 0,
+      teil3 = 0;
+
+    // Teil 1
+    Object.entries(LesenData.teil1.correctAnswers || {}).forEach(
+      ([id, correct]) => {
+        const stringId = id.toString();
+        const userAnswer = answers?.lesen?.teil1?.[stringId];
+        if (
+          (userAnswer || "").toString().toUpperCase() ===
+          (correct || "").toString().toUpperCase()
+        ) {
+          teil1 += 5;
+        }
+      }
+    );
+
+    // Teil 2
+    LesenData.teil2.forEach((item) => {
+      item.questions.forEach((q) => {
+        const userAnswer = answers?.lesen?.teil2?.[item.id]?.[q.id];
+        if (
+          (userAnswer || "").toString().toUpperCase() ===
+          (q.correct_option || "").toString().toUpperCase()
+        ) {
+          teil2 += 5;
+        }
+      });
+    });
+
+    // Teil 3
+    Object.entries(LesenData.teil3.correctMatches || {}).forEach(
+      ([id, correct]) => {
+        const stringId = id.toString();
+        const userAnswer = answers?.lesen?.teil3?.[stringId];
+        if (
+          (userAnswer || "").toString().toUpperCase() ===
+          (correct || "").toString().toUpperCase()
+        ) {
+          teil3 += 2.5;
+        }
+      }
+    );
+
+    return { teil1, teil2, teil3, total: teil1 + teil2 + teil3 };
+  };
+
+  const horenScore = calcHorenScore();
+  const lesenScore = calcLesenScore();
+
+  console.log("Hören answers:", answers?.horen);
+  console.log("Lesen answers:", answers?.lesen);
+  console.log("Hören score:", horenScore);
+  console.log("Lesen score:", lesenScore);
 
   const downloadPDF = () => {
     const input = certRef.current;
@@ -24,116 +129,52 @@ const Zertifikat = () => {
       <div className="zertifikat" ref={certRef}>
         <h1>Zertifikat</h1>
 
-        <div className="zer-section">
-          <h2>telc Deutsch B2</h2>
-          <p className="zer-subtitle">
-            <strong>Eingewisslich B2</strong>
-          </p>
-          <p className="zer-italic">Obwohl er Eingewisslich B2</p>
-        </div>
-
-        <div className="zer-table-section">
-          <table className="zer-info-table">
-            <tbody>
-              <tr>
-                <td className="zer-label">Transzgebiet</td>
-                <td className="zer-value">Alters</td>
-              </tr>
-              <tr>
-                <td className="zer-label">Name</td>
-                <td className="zer-value">Vorname</td>
-              </tr>
-              <tr>
-                <td className="zer-label">16.04.1986</td>
-                <td className="zer-value">Tennis</td>
-              </tr>
-              <tr>
-                <td className="zer-label">Diskontakt im</td>
-                <td className="zer-value">Diskontakt</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
+        {/* Hörverstehen */}
         <div className="zer-score-section">
           <div className="zer-score-row">
-            <div className="zer-score-label">Sportliche Pickup</div>
-            <div className="zer-score-value">17.5 / 28.15 Punkte</div>
+            <div className="zer-score-label">Hörverstehen</div>
+            <div className="zer-score-value">
+              {horenScore.total} / 75 Punkte
+            </div>
           </div>
           <div className="zer-score-details">
             <div className="zer-score-detail">
-              <span className="zer-detail-label">○ Unterstützen</span>
-              <span className="zer-detail-value">70.0 / 75 Punkte</span>
+              <span className="zer-detail-label">○ Teil 1</span>
+              <span className="zer-detail-value">{horenScore.teil1} / 25</span>
             </div>
             <div className="zer-score-detail">
-              <span className="zer-detail-label">○ Sprachbauweise</span>
-              <span className="zer-detail-value">16.5 / 30 Punkte</span>
+              <span className="zer-detail-label">○ Teil 2</span>
+              <span className="zer-detail-value">{horenScore.teil2} / 25</span>
             </div>
             <div className="zer-score-detail">
-              <span className="zer-detail-label">○ Hörversteher</span>
-              <span className="zer-detail-value">50.0 / 75 Punkte</span>
-            </div>
-            <div className="zer-score-detail">
-              <span className="zer-detail-label">○ Sportlicher Ausdruck</span>
-              <span className="zer-detail-value">39.0 / 45 Punkte</span>
+              <span className="zer-detail-label">○ Teil 3</span>
+              <span className="zer-detail-value">{horenScore.teil3} / 25</span>
             </div>
           </div>
         </div>
 
+        {/* Leseverstehen */}
         <div className="zer-score-section">
           <div className="zer-score-row">
-            <div className="zer-score-label">Mixedlose Pickups</div>
-            <div className="zer-score-value">67.0 / 78 Punkte</div>
+            <div className="zer-score-label">Leseverstehen</div>
+            <div className="zer-score-value">
+              {lesenScore.total} / 75 Punkte
+            </div>
           </div>
           <div className="zer-score-details">
             <div className="zer-score-detail">
-              <span className="zer-detail-label">○ Flüsselaston</span>
-              <span className="zer-detail-value">23.0 / 25 Punkte</span>
+              <span className="zer-detail-label">○ Teil 1</span>
+              <span className="zer-detail-value">{lesenScore.teil1} / 25</span>
             </div>
             <div className="zer-score-detail">
-              <span className="zer-detail-label">○ Dekoration</span>
-              <span className="zer-detail-value">20.0 / 25 Punkte</span>
+              <span className="zer-detail-label">○ Teil 2</span>
+              <span className="zer-detail-value">{lesenScore.teil2} / 25</span>
             </div>
             <div className="zer-score-detail">
-              <span className="zer-detail-label">○ Treibsleitung</span>
-              <span className="zer-detail-value">21.0 / 25 Punkte</span>
+              <span className="zer-detail-label">○ Teil 3</span>
+              <span className="zer-detail-value">{lesenScore.teil3} / 25</span>
             </div>
           </div>
-        </div>
-
-        <div className="zer-summary-section">
-          <div className="zer-summary-row">
-            <div className="zer-summary-label">Summe</div>
-            <div className="zer-summary-value">242.5 / 260 Punkte</div>
-          </div>
-        </div>
-
-        <div className="zer-details-section">
-          <table className="zer-details-table">
-            <tbody>
-              <tr>
-                <td className="zer-label">Prädukt</td>
-                <td className="zer-value">Gut</td>
-              </tr>
-              <tr>
-                <td className="zer-label">Daten der Pickup</td>
-                <td className="zer-value">23.03.2015</td>
-              </tr>
-              <tr>
-                <td className="zer-label">Stadensnummer</td>
-                <td className="zer-value">01/11/22</td>
-              </tr>
-              <tr>
-                <td className="zer-label">Daten der Ausstellung</td>
-                <td className="zer-value">21.04.2015</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div className="zer-signature-section">
-          <hr className="zer-signature-line" />
-          <p className="zer-signature-label">Geschäftsführer</p>
         </div>
       </div>
 
