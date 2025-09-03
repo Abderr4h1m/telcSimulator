@@ -5,13 +5,20 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import App from "./App";
 import "./index.css";
+import { ExamAnswersProvider } from "./state/ExamAnswersContext";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+// ReactDOM.createRoot(document.getElementById("root")).render(
+//   <React.StrictMode>
+//     <BrowserRouter>
+//       <Provider store={store}>
+//         <App />
+//       </Provider>
+//     </BrowserRouter>
+//   </React.StrictMode>
+// );
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <ExamAnswersProvider>
+    <App />
+  </ExamAnswersProvider>
 );

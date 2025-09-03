@@ -1,240 +1,256 @@
-/* Sprachbausteine.css */
-
-.sp1-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 20px 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.sp1-wrapper {
-  display: flex;
-  width: 80%;
-  max-width: 1200px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.sp1-left {
-  flex: 1;
-  padding: 25px;
-  background: #f8f9fa;
-  border-right: 1px solid #e9ecef;
-}
-
-.sp1-left h3 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  font-weight: 600;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #3498db;
-}
-
-.sp1-options {
-  margin-bottom: 20px;
-  padding: 15px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.sp1-options-active {
-  background-color: #e3f2fd;
-  border-left: 4px solid #3498db;
-}
-
-.sp1-option-title {
-  font-weight: 600;
-  margin: 0 0 10px 0;
-  color: #2c3e50;
-}
-
-.sp1-option-list {
+.telc-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.sp1-option {
-  padding: 10px 15px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.sp1-option:hover {
-  background: #f1f8ff;
-  border-color: #3498db;
-}
-
-.sp1-option-selected {
-  background: #e3f2fd;
-  border-color: #3498db;
-  font-weight: 500;
-}
-
-.sp1-right {
-  flex: 2;
-  padding: 25px;
-}
-
-.sp1-right h3 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  font-weight: 600;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #3498db;
-}
-
-.sp1-text {
-  line-height: 1.8;
-  font-size: 17px;
-  color: #333;
-}
-
-.sp1-blank {
-  display: inline-block;
-  min-width: 80px;
-  height: 32px;
-  margin: 0 5px;
-  padding: 5px 10px;
-  border-bottom: 2px solid #95a5a6;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  vertical-align: middle;
-  font-weight: 500;
-  border-radius: 4px;
-}
-
-.sp1-blank-empty {
-  background-color: #f8f9fa;
-  color: #7f8c8d;
-}
-
-.sp1-blank-filled {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-  border-bottom-color: #4caf50;
-}
-
-.sp1-blank-selected {
-  background-color: #ffe082;
-  color: #f57c00;
-  border-bottom-color: #ffa000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive design */
-@media (max-width: 900px) {
-  .sp1-wrapper {
-    flex-direction: column;
-    width: 90%;
-  }
-
-  .sp1-left {
-    border-right: none;
-    border-bottom: 1px solid #e9ecef;
-  }
-}
-/* Responsive */
-@media (max-width: 768px) {
-  .sp1-container {
-    width: 95%;
-    font-size: 0.95rem;
-    padding: 15px;
-  }
-
-  .sp1-select {
-    font-size: 0.9rem;
-  }
-}
-
-.sp2-wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  margin: 20px auto;
-  gap: 20px;
-}
-
-/* LEFT SIDE */
-.sp2-left {
-  flex: 2;
-  background: #fff;
   padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #bbb;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
   line-height: 1.6;
 }
 
-.sp2-gap {
-  display: inline-block;
-  padding: 2px 6px;
-  margin: 2px;
-  border-bottom: 1px dotted #333;
-  cursor: pointer;
-}
-
-.sp2-gap.active {
-  background-color: #d0f0fd;
-}
-
-/* RIGHT SIDE */
-.sp2-right {
-  width: 20%;
-}
-
-.sp2-right h3 {
-  text-align: center;
-}
-
-.sp2-words {
+/* Grid layout */
+.telc-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr); /* single column first */
-  row-gap: 10px;
-  justify-items: stretch;
+  grid-template-columns: 2fr 1fr; /* left = passage, right = options */
+  gap: 30px;
+  margin-bottom: 20px;
 }
 
-.sp2-word {
-  display: block;
-  width: 100%;
-  padding: 6px;
-  margin: 2px 0;
-  cursor: pointer;
-  text-align: center;
-  border: 1px solid #bbb;
-  color: rgb(171, 46, 9);
-  font-weight: 500;
-  font-size: 1.1rem;
+/* LEFT: Passage */
+.telc-left {
+  background: white;
+  padding: 15px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: #f5f5f5;
 }
 
-/* GAP placeholders */
-.sp2-gap {
+.gap-placeholder {
   display: inline-block;
   min-width: 40px;
+  text-align: center;
+  margin: 0 3px;
+}
+/* When gap is unfilled */
+.gap-empty {
+  display: inline-block;
+  background: #395177;
+  color: white;
   padding: 2px 6px;
-  border-bottom: 2px dashed #888;
-  cursor: pointer;
-  position: relative;
+  border-radius: 4px;
+  font-weight: bold;
+  min-width: 50px;
+}
+
+/* When gap is filled with answer */
+.gap-filled {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #395177;   /* darker blue like screenshot */
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* Small circle with gap number inside the filled answer pill */
+.gap-number-inline {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: #1c2c45;
+  border-radius: 50%;
+  color: white;
+  font-size: 12px;
+  line-height: 18px;
   text-align: center;
 }
 
-.sp2-gap.active {
-  background: rgba(245, 207, 195, 0.548);
-  border-radius: 10px;
+/* RIGHT: Options */
+.telc-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.sp2-gap-index {
-  font-size: 10px;
-  color: #999;
-  margin-left: 4px;
+.telc-gap-options {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fafafa;
+}
+
+.gap-number {
+  display: inline-block;
+  background: #1c2c45;
+  color: white;
+  font-weight: bold;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  margin-right: 12px;
+}
+
+.option-label {
+  margin-right: 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.option-label input {
+  margin-right: 5px;
+}
+
+/* Save button */
+.save-btn {
+  margin-top: 20px;
+  padding: 8px 15px;
+  background: #2f80ed;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Container grid: passage left, wordbank right */
+.teil2-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Passage text */
+.teil2-passage {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* Gap placeholders */
+.gap-box {
+  display: inline-block;
+  background: #d9e2ff;
+  border-radius: 6px;
+  padding: 2px 6px;
+  margin: 0 3px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.gap-box:hover {
+  background: #b9aaff;
+}
+.gap-box.active-gap {
+  border: 2px solid #3366ff;
+  background: rgb(50, 215, 97);
+}
+
+/* Wordbank area */
+/* Container grid: passage left, wordbank right */
+.teil2-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Passage text */
+.teil2-passage {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* Gap placeholders */
+.gap-box {
+  display: inline-block;
+  background: #d9e2ff;
+  border-radius: 6px;
+  padding: 2px 6px;
+  margin: 0 3px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.gap-box.active-gap {
+  border: 2px solid #3366ff;
+}
+
+/* Wordbank area */
+.teil2-wordbank {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f4f4f9;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Word buttons */
+.word-btn {
+  background: #b9aaff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 6px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* .word-btn.used-word {
+
+} */
+.word-btn:hover {
+  background: #9a88ff;
+}
+
+.word-btn.used-word {
+  background: #b9aaff;
+  color: #fff;
+  border: 1px solid #ccc;
+  font: bold;
+}
+
+/* Letter label (A., B., ...) */
+.word-label {
+  font-weight: bold;
+  width: 18px;
+  display: inline-block;
+  text-align: right;
+}
+
+/* Save button */
+.save-btn {
+  grid-column: span 2;
+  margin-top: 15px;
+  padding: 8px 12px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.wb2-gap.is-filled .wb2-gap-num {
+  display: none;
 }

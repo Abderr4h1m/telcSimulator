@@ -1,0 +1,99 @@
+/* === Sprachbausteine Teil 2 (namespaced) === */
+.wb2{
+  display:grid;
+  grid-template-columns: 2fr 1.05fr;
+  gap:16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* LEFT: passage */
+.wb2-passage{
+  background:#fff;
+  border:1px solid #dadbe1;
+  border-radius:8px;
+  padding:12px 14px;
+  line-height:1.45;
+  font-size:14px;
+}
+
+/* inline gap pill with number + chosen word */
+.wb2-gap{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin:0 3px 2px;
+  padding:3px 8px 3px 6px;
+  border:1px solid #cfd8f1;
+  background:#eef3ff;
+  border-radius:12px;
+  cursor:pointer;
+  vertical-align:baseline;
+}
+.wb2-gap:hover{ box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.wb2-gap.is-selected{ outline:2px solid #95b2ff; }
+.wb2-gap.is-filled{ background:#dfe6fd; border-color:#b8c2e0; }
+
+.wb2-gap-num{
+  width:20px; height:20px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:12px; color:#102a43;
+  background:#e6eaf5; border:1px solid #cfd8f1;
+  flex-shrink:0;
+}
+.wb2-gap-text{
+  min-width:40px; /* keeps pill height stable when empty */
+  font-weight:700; color:#1a1a1a;
+}
+
+/* RIGHT: word bank */
+.wb2-right{
+  display:flex; flex-direction:column; gap:8px;
+}
+.wb2-word{
+  display:flex; align-items:center; gap:10px;
+  width:100%;
+  border:1px solid #9a88ff;
+  background:#9a88ff; /* TELC-ish violet */
+  color:#1a1a1a;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  text-align:left;
+}
+.wb2-word:hover{ filter:brightness(.97); }
+.wb2-word.is-selected{ outline:2px solid #2a66ff; }
+.wb2-word.is-used{
+    color: white;
+    font-weight: bold;
+}
+
+.wb2-letter{
+  width:24px; height:24px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:#9a88ff; color:#fff; font-weight:700; font-size:12px;
+  flex-shrink:0;
+}
+.wb2-word.is-used .wb2-letter{
+  background:#e9e9ef; color:#666;
+}
+
+.wb2-word-text{ font-size:14px; }
+
+/* Save button area */
+.wb2-actions{ margin-top:8px; }
+.wb2 .save-btn{
+  background:#0a4bd1; color:#fff; border:none; padding:7px 14px;
+  border-radius:6px; cursor:pointer; font-size:13px;
+}
+.wb2 .save-btn:hover{ filter:brightness(.96); }
+
+/* Responsive: stack */
+@media (max-width:1100px){
+  .wb2{ grid-template-columns: 1fr; }
+}
+
+.wb2-word.is-selected  {
+    background-color: rgb(50, 215, 97);
+;
+    font-weight: bold;
+}

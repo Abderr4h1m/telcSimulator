@@ -2,9 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./Home";
 import Schreiben from "./components/Schreiben/Schreiben";
-import Teil1 from "./components/Lesen/Teil1";
-import Teil2 from "./components/Lesen/Teil2";
-import Teil3 from "./components/Lesen/Teil3";
+import LesenTeil1 from "./components/Lesen/LesenTeil1";
+import LesenTeil2 from "./components/Lesen/LesenTeil2";
+import LesenTeil3 from "./components/Lesen/LesenTeil3";
 import SprachbausteineTeil1 from "./components/Sprachbausteine/SprachbausteineTeil1";
 import SprachbausteineTeil2 from "./components/Sprachbausteine/SprachbausteineTeil2";
 import Loader from "./components/Loader";
@@ -30,10 +30,9 @@ function App() {
       <Navbar />
       <Routes>
         {/* lessen */}
-        <Route path="/" element={<Home />} />
-        <Route path="/lesen/teil1" element={<Teil1 />} />
-        <Route path="/lesen/teil2" element={<Teil2 />} />
-        <Route path="/lesen/teil3" element={<Teil3 />} />
+        <Route path="/lesen/teil1" element={<LesenTeil1 />} />
+        <Route path="/lesen/teil2" element={<LesenTeil2 />} />
+        <Route path="/lesen/teil3" element={<LesenTeil3 />} />
         {/* spachbaustaine */}
         <Route
           path="/sprachbausteine/teil1"

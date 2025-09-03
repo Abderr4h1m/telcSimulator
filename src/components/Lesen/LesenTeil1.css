@@ -1,0 +1,95 @@
+/* src/components/Lesen/LesenTeil1.css */
+
+.lesen-container {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.lesen-instruction {
+  background: #ffffcc;
+  border: 1px solid #e6e6b3;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.lesen-grid {
+  display: flex;
+  gap: 20px;
+}
+
+/* LEFT: Passages */
+.lesen-left {
+  flex: 2;
+}
+
+.lesen-passage {
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.lesen-gap {
+  background: #9a88ff;
+  border: 1px solid #aaa;
+  padding: 5px 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #222;
+}
+
+.lesen-gap.selected {
+  border: 2px solid #003399;
+  background: rgb(50, 215, 97);
+}
+.lesen-title.title-selected {
+  background: rgb(50, 215, 97);
+}
+.lesen-text {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* RIGHT: Titles */
+.lesen-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lesen-title {
+  background: #9a88ff;
+  color: black;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #666;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.lesen-title.clickable:hover {
+  background: #99aaff;
+}
+
+.lesen-title.used {
+  color: #fff;
+}
+
+.lesen-title-id {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.lesen-save {
+  margin-top: 20px;
+  background: #0044cc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}

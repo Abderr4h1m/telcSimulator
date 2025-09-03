@@ -1,335 +1,206 @@
-import React, { useState } from "react";
-import "./Sprachbausteine.css";
+// src/components/Sprachbausteine/SprachbausteineTeil2.jsx
+import React, { useEffect, useMemo, useState } from "react";
+import "./SprachbausteineTeil2.css";
 
-const SprachbausteineTeil2 = ({ onSave }) => {
-  const [answers, setAnswers] = useState(Array(10).fill(null));
-  const [selectedGap, setSelectedGap] = useState(null);
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-  const words = [
-    "AN",
-    "AUF",
-    "AUFGRUND",
-    "BEHEBEN",
-    "BESCHEIDEN",
-    "DRASTISCH",
-    "ERHÖHEN",
-    "FÜR",
-    "IM",
-    "NACH",
-    "RECHNEN",
-    "STATT",
-    "STEIGEN",
-    "ÜBERHEBLICH",
-    "UNSCHWER",
-  ].sort(); // ✅ sorted alphabetically
+export default function SprachbausteineTeil2({ examId = 1, onSave }) {
+  const [question, setQuestion] = useState(null);
 
-  const handleGapClick = (index) => setSelectedGap(index);
+  // selections
+  const [selectedGap, setSelectedGap] = useState(null);     // number/id of gap
+  const [selectedWordIdx, setSelectedWordIdx] = useState(null); // index in words[]
 
-  const handleWordClick = (word) => {
-    if (selectedGap !== null) {
-      const newAnswers = [...answers];
-      newAnswers[selectedGap] = word;
-      setAnswers(newAnswers);
+  // answers and usage maps
+  const [gapToWordIdx, setGapToWordIdx] = useState({});     // gapId -> wordIndex
+  const [wordIdxToGap, setWordIdxToGap] = useState({});     // wordIndex -> gapId
+
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      try {
+        const res = await fetch(`/api/exams/${examId}/questions`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const all = await res.json();
+
+        // pick the wordbank item
+        const wb = all.find((q) => q.question_type === "wordbank");
+        if (!wb) throw new Error("No wordbank question.");
+        setQuestion(wb);
+
+        // init gaps -> null
+        const init = {};
+        wb.options?.passage?.forEach((item) => {
+          if (item && typeof item === "object" && "gap" in item) {
+            init[item.gap] = null;
+          }
+        });
+        setGapToWordIdx(init);
+        setWordIdxToGap({});
+      } catch (e) {
+        console.error("Error fetching wordbank:", e);
+      }
+    };
+    fetchQuestion();
+  }, [examId]);
+
+  const words = useMemo(() => question?.options?.words ?? [], [question]);
+
+  // ----- helpers
+  const assignWordToGap = (gapId, wordIndex) => {
+    // compute next maps in one go (no nested setState)
+    setGapToWordIdx((prevGap) => {
+      const prevWord = { ...wordIdxToGap };      // use latest snapshot
+      const nextGap   = { ...prevGap };
+
+      // 1) If this word is already used in some gap, free that gap
+      const fromGap = prevWord[wordIndex];
+      if (fromGap != null) {
+        nextGap[fromGap] = null;
+      }
+
+      // 2) If this target gap already had a word, free that word
+      const oldIdx = nextGap[gapId];
+      if (oldIdx != null) {
+        prevWord[oldIdx] = null;
+      }
+
+      // 3) Place the word in target gap
+      nextGap[gapId] = wordIndex;
+      prevWord[wordIndex] = gapId;
+
+      // sync the reverse map once
+      setWordIdxToGap(prevWord);
+
+      // clear selections
       setSelectedGap(null);
+      setSelectedWordIdx(null);
+
+      return nextGap;
+    });
+  };
+
+  const clearGap = (gapId) => {
+    setGapToWordIdx((prevGap) => {
+      const nextGap = { ...prevGap };
+      const curIdx = nextGap[gapId];
+      if (curIdx != null) {
+        nextGap[gapId] = null;
+        setWordIdxToGap((prevWord) => ({ ...prevWord, [curIdx]: null }));
+      }
+      setSelectedGap(null);
+      setSelectedWordIdx(null);
+      return nextGap;
+    });
+  };
+  // ----- clicks
+  const handleGapClick = (gapId) => {
+    // if a word is already selected, drop it here
+    if (selectedWordIdx != null) {
+      assignWordToGap(gapId, selectedWordIdx);
+      return;
+    }
+
+    // toggle gap selection; clicking a filled gap with nothing selected clears it
+    if (selectedGap === gapId) {
+      // second click: if filled -> clear, else unselect
+      const hadWord = gapToWordIdx[gapId] != null;
+      if (hadWord) clearGap(gapId);
+      setSelectedGap(null);
+    } else {
+      setSelectedGap(gapId);
     }
   };
 
+  const handleWordClick = (index) => {
+    // if a gap is selected, assign immediately
+    if (selectedGap != null) {
+      assignWordToGap(selectedGap, index);
+      return;
+    }
+    // otherwise select the word (toggle)
+    setSelectedWordIdx((cur) => (cur === index ? null : index));
+  };
+
+  const handleSubmit = () => {
+    // produce gapId -> word string
+    const payload = {};
+    Object.entries(gapToWordIdx).forEach(([gapId, idx]) => {
+      payload[gapId] = idx != null ? words[idx] : null;
+    });
+    if (onSave) onSave(payload);
+    console.log("Teil 2 user answers:", payload);
+  };
+
+  if (!question) return <div>Loading…</div>;
+
+  // ----- render
   return (
-    <>
-      <div className="info-box">
-        Lesen Sie den Text und entscheiden Sie, welches Wort in welche Lücke
-        passt. Sie können jedes Wort nur einmal verwenden. Nicht alle Wörter
-        passen in den Text.
+    <div className="lesen-container">
+      <div className="lesen-instruction">
+        Lesen Sie die Überschriften a–j und die Texte 1–5 und entscheiden Sie,
+        welche Überschrift am besten zu welchem Text passt.
       </div>
-      <div className="sp2-wrapper">
-        {/* LEFT: Text with gaps */}
-        <div className="sp2-left">
-          <p>
-            <strong>Sehr geehrte Frau Szabo,</strong>
-          </p>
-          <p>vielen Dank für Ihr Interesse an unseren Deutschkursen.</p>
-          <p>
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 0 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[0] ? "600" : "400",
-                color: answers[0] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(0)}
-            >
-              {answers[0] || "1"}
-            </span>{" "}
-            erhalten Sie das angeforderte Anmeldeformular, das Sie bitte
-            ausgefüllt an uns zurückschicken. Mit der Anmeldung überweisen Sie
-            bitte eine Anzahlung{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 1 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[1] ? "600" : "400",
-                color: answers[1] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(1)}
-            >
-              {answers[1] || "2"}
-            </span>{" "}
-            von € 200,- auf unser Konto. Die Kontoverbindung finden Sie unten
-            auf dem Anmeldeformular{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 2 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[2] ? "600" : "400",
-                color: answers[2] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(2)}
-            >
-              {answers[2] || "3"}
-            </span>{" "}
-            genaueren Einschätzung Ihrer Vorkenntnisse haben wir einen
-            Einstufungstest beigelegt.
-          </p>
 
-          <p>
-            Wenn Sie die Testbögen ausfüllen und mit der Anmeldung an uns
-            zurücksenden, helfen Sie uns bei der Kursplanung. Am ersten
-            Unterrichtstag in unserer Schule wird sich{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 3 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[3] ? "600" : "400",
-                color: answers[3] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(3)}
-            >
-              {answers[3] || "4"}
-            </span>{" "}
-            ein mündlicher Test anschließen. Damit sind wir in der Lage, den für
-            Sie angemessenen Kurs auszuwählen.
-          </p>
+    <div className="wb2">
+      {/* LEFT: Passage with numbered gaps */}
+      <div className="wb2-left">
+        <div className="wb2-passage">
+          {question.options.passage.map((item, i) => {
+            if (typeof item === "string") {
+              return <span key={`t-${i}`}>{item}</span>;
+            }
+            if (item && typeof item === "object" && "gap" in item) {
+              const gapId = item.gap;
+              const idx = gapToWordIdx[gapId];
+              const filledWord = idx != null ? words[idx] : null;
+              const isSel = selectedGap === gapId;
 
-          <p>
-            Außerdem finden Sie in den Unterlagen einen Fragebogen{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 4 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[4] ? "600" : "400",
-                color: answers[4] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(4)}
-            >
-              {answers[4] || "5"}
-            </span>{" "}
-            Ihrer Freizeitinteressen, denn wir werden uns bemühen, Ihren
-            Aufenthalt in Leipzig{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 5 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[5] ? "600" : "400",
-                color: answers[5] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(5)}
-            >
-              {answers[5] || "6"}
-            </span>{" "}
-            angenehm zu gestalten.
-          </p>
-
-          <p>
-            Schließlich füllen Sie bitte das grüne Unterkunftblatt aus. Sie
-            können wählen zwischen einem 3-Sterne-Hotel,{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 6 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[6] ? "600" : "400",
-                color: answers[6] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(6)}
-            >
-              {answers[6] || "7"}
-            </span>{" "}
-            Privatunterkunft in einer deutschen Gastfamilie oder der Unterkunft
-            in einem Studentenwohnheim. Letzteres ist nur in den Semesterferien
-            der Universität - in der Regel vom 15.2. bis 15.4. und vom 15.7. bis
-            15.10. - möglich.
-          </p>
-
-          <p>
-            Geben Sie bitte auch Ihre Verpflegungswünsche - Frühstück oder
-            Halbpension - an. Beachten Sie aber, dass im Studentenwohnheim nur
-            Selbstverpflegung möglich ist.{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 7 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[7] ? "600" : "400",
-                color: answers[7] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(7)}
-            >
-              {answers[7] || "8"}
-            </span>{" "}
-            Ihre Anmeldung bei uns eingegangen ist, erhalten Sie eine
-            Anmeldebestätigung und einen Stadtplan mit Wegbeschreibung.{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 8 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[8] ? "600" : "400",
-                color: answers[8] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(8)}
-            >
-              {answers[8] || "9"}
-            </span>{" "}
-            Sie den Weg zu uns ohne Umstände finden.
-          </p>
-
-          <p>
-            Die Adresse Ihrer Unterkunft erhalten Sie ca. 2 Wochen vor
-            Kursbeginn{" "}
-            <span
-              style={{
-                display: "inline-block",
-                minWidth: "100px",
-                margin: "0 5px",
-                padding: "6px 10px",
-                borderBottom: "2px dashed #4c6ef5",
-                textAlign: "center",
-                cursor: "pointer",
-                backgroundColor: selectedGap === 9 ? "#e3f2fd" : "#f8f9fa",
-                borderRadius: "4px",
-                fontWeight: answers[9] ? "600" : "400",
-                color: answers[9] ? "#2c3e50" : "#6c757d",
-                transition: "all 0.2s ease",
-                position: "relative",
-              }}
-              onClick={() => handleGapClick(9)}
-            >
-              {answers[9] || "10"}
-            </span>{" "}
-            weitere Fragen steht Ihnen unser Sekretariat gerne montags bis
-            freitags von 8 bis 18 Uhr zur Verfügung.
-          </p>
-
-          <p
-            style={{
-              textAlign: "right",
-              fontStyle: "italic",
-              marginTop: "30px",
-            }}
-          >
-            Mit freundlichen Grüßen
-            <br />
-            Gerhard Dietz
-            <br />
-            Direktor
-          </p>
-        </div>
-
-        {/* RIGHT: Word list */}
-        <div className="sp2-right">
-          <div className="sp2-words">
-            {words.map((word, i) => (
-              <button
-                key={i}
-                className="sp2-word"
-                onClick={() => handleWordClick(word)}
-              >
-                {word}
-              </button>
-            ))}
-          </div>
+              return (
+                <button
+                  key={`g-${gapId}`}
+                  className={`wb2-gap ${isSel ? "is-selected" : ""} ${
+                    filledWord ? "is-filled" : ""
+                  }`}
+                  onClick={() => handleGapClick(gapId)}
+                  type="button"
+                >
+                  <span className="wb2-gap-num">{gapId}</span>
+                  <span className="wb2-gap-text">
+                    {filledWord ?? "\u00A0"}{/* keep height */}
+                  </span>
+                </button>
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
-    </>
+
+      {/* RIGHT: Wordbank (A… letter + word). Words stay visible; used ones turn “white”. */}
+      <div className="wb2-right">
+        {words.map((w, i) => {
+          const isUsed = wordIdxToGap[i] != null;
+          const isSelected = selectedWordIdx === i;
+          return (
+            <button
+              key={`w-${i}`}
+              className={`wb2-word ${isUsed ? "is-used" : ""} ${
+                isSelected ? "is-selected" : ""
+              }`}
+              onClick={() => handleWordClick(i)}
+              type="button"
+              title={isUsed ? `Bereits verwendet in Lücke ${wordIdxToGap[i]}` : "Wort wählen"}
+            >
+              <span className="wb2-letter">{letters[i] ?? "?"}</span>
+              <span className="wb2-word-text">{w}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="wb2-actions">
+        <button className="save-btn" onClick={handleSubmit}>Antworten speichern</button>
+      </div>
+    </div></div>
   );
-};
-
-export default SprachbausteineTeil2;
+}
